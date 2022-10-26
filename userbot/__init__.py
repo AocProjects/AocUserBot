@@ -352,7 +352,7 @@ DEVS = 1948748468 #developer ayrıcalıkları olacak
 
 PREMIUM = get('https://raw.githubusercontent.com/SakirBey1/Datas/main/premium.json').json() # Premium Üyelerin ID 
 
-ASISTAN = 5335105873 # Bot yardımcısı
+ASISTAN = 5754874949 # Bot yardımcısı
 
 if os.path.exists("learning-data-root.check"):
     os.remove("learning-data-root.check")
