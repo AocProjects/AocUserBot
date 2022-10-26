@@ -1,13 +1,3 @@
-# Copyright (C) 2021 The HerlockProjects Company LLC.
-#
-# Licensed under the HerlockProjects Public License, Version 1.c (the "License");
-# you may not use this file except in compliance with the License.
-#
-
-# Thanks github.com/spechide for creating inline bot support.
-# HerlockUserBot - SakirBey1 - Herlockexe
-""" UserBot hazırlanışı. """
-
 import os
 import time
 import heroku3
@@ -461,9 +451,6 @@ with bot:
     usnm = me.username
     name = me.first_name
     lname = me.last_name
-    getu = bot(GetFullUserRequest(uid))
-    ubio = getu.about
-    DEFAULT_BIO = ubio
     OWNER_ID = me.id
     DEFAULT_NAME = name
     try:
