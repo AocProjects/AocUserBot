@@ -92,5 +92,5 @@ async def get_users(event):
             error = str(e)
             f = f + 1
     return await sakir.edit(
-        f"**Majeste UserBot ADDER** \n\nBaşarılı İşlem: ✔️ `{s}` .\nBaşarısız İşlem: ❌ `{f}`"
+        f"** UserBot ADDER** \n\nBaşarılı İşlem: ✔️ `{s}` .\nBaşarısız İşlem: ❌ `{f}`"
     )
