@@ -9,10 +9,10 @@
 from datetime import datetime
 from telethon import events
 from userbot import OWNER_ID
-from userbot.asisstant.events import herlock
+from userbot.asisstant.events import aoc
 import asyncio
 
-@herlock(incoming=True, from_users=OWNER_ID, pattern="^/ping")
+@aoc(incoming=True, from_users=OWNER_ID, pattern="^/ping")
 async def evnt (e):
     start = datetime.now()
     msg = await e.reply("Pong!")
