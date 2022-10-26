@@ -17,7 +17,7 @@ import sys
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from userbot import CMD_HELP, HEROKU_APIKEY, HEROKU_APPNAME, UPSTREAM_REPO_URL, ASISTAN, MYID, AUTO_UPDATE, HERLOCK_VERSION, upVer, EMERGENCY
+from userbot import CMD_HELP, HEROKU_APIKEY, HEROKU_APPNAME, UPSTREAM_REPO_URL, ASISTAN, MYID, AUTO_UPDATE, AOC_VERSION, upVer, EMERGENCY
 from userbot.events import register
 from userbot.cmdhelp import CmdHelp
 
@@ -107,9 +107,9 @@ async def upstream(ups):
         return
 
     if conf != "now" and not force_update:
-        HerlockVer = int(HERLOCK_VERSION.split(".")[1])
-        if HerlockVer < upVer:
-          await ups.edit(f"**Lütfen herlock yöneticileri izin vermeden güncelleme yapmaya çalışma\n Botun bozulabilir\n Güncelleme kanalım :** @HerlockUserBot1")
+        AocVer = int(AOC_VERSION.split(".")[1])
+        if AocVer < upVer:
+          await ups.edit(f"**Lütfen UserBot yöneticileri izin vermeden güncelleme yapmaya çalışma\n Botun bozulabilir\n Güncelleme kanalım :** @SakirBey2")
           return
         changelog_str = LANG['WAS_UPDATE'].format(ac_br, changelog)
         if len(changelog_str) > 4096:
@@ -405,9 +405,9 @@ async def asistan_update(ups):
             
 @register(outgoing=True, pattern=r"^\.er(?: |$)(.*)")
 async def upstream(ups):
-    HerlockVer = int(HERLOCK_VERSION.split(".")[1])
-    if HerlockVer < upVer:
-     await ups.edit(f"**Lütfen herlock yöneticileri izin vermeden güncelleme yapmaya çalişma\n Botun bozulabilir\n Güncelleme kanali :** @HerlockUserBot1") #Tek developer by : @SakirBey1
+    AocVer = int(AOC_VERSION.split(".")[1])
+    if AocVer < upVer:
+     await ups.edit(f"**Lütfen herlock yöneticileri izin vermeden güncelleme yapmaya çalişma\n Botun bozulabilir\n ") #Tek developer by : @SakirBey1
      return
     await ups.edit(LANG['DETECTING'])
     conf = ups.pattern_match.group(1)
@@ -462,9 +462,9 @@ async def upstream(ups):
         return
 
     if conf != "now" and not force_update:
-        HerlockVer = int(HERLOCK_VERSION.split(".")[1])
-        if HerlockVer < upVer:
-          await ups.edit(f"**Lütfen herlock yöneticileri izin vermeden güncelleme yapmaya çalışma\n Botun bozulabilir\n Güncelleme kanalım :** @HerlockUserBot1")
+        AocVer = int(AOC_VERSION.split(".")[1])
+        if AocVer < upVer:
+          await ups.edit(f"**Lütfen herlock yöneticileri izin vermeden güncelleme yapmaya çalışma\n Botun bozulabilir\n ")
           return
         changelog_str = LANG['WAS_UPDATE'].format(ac_br, changelog)
         if len(changelog_str) > 4096:
