@@ -1,11 +1,3 @@
-# Copyright (C) 2021 Sakir Bey.
-#
-# Licensed under the GPL-3.0 License;
-# you may not use this file except in compliance with the License.
-#
-
-# HerlockUserBot - ErdewBey - Midy - ByMisakiMey
-
 from asyncio import sleep
 from json import loads
 from json.decoder import JSONDecodeError
@@ -19,7 +11,7 @@ from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
+from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP,
                      SPOTIFY_DC, SPOTIFY_KEY, bot)
 from userbot.events import register
 from userbot.cmdhelp import CmdHelp
@@ -51,6 +43,8 @@ SPOTIFYCHECK = False
 RUNNING = False
 OLDEXCEPT = False
 PARSE = False
+DEFAULT_BIO = ""
+
 
 
 # ================================================
@@ -84,7 +78,7 @@ async def update_spotify_info():
             if song != oldsong and artist != oldartist:
                 oldartist = artist
                 environ["oldsong"] = song
-                spobio = "@HerlockUserBot 🎧: " + artist + " - " + song
+                spobio = "@SakirBey2 🎧: " + artist + " - " + song
                 try:
                     await bot(UpdateProfileRequest(about=spobio))
                 except AboutTooLongError:
@@ -206,22 +200,22 @@ def get_spotify_info(TIME=5):
         totaltime = int(item['duration_ms'])
         if len(item['album']['images']) > 0:
             telegraph.create_account(short_name='spotify')
-            if path.exists("@HerlockUserBot-Spotify.jpg"):
-                remove("@HerlockUserBot-Spotify.jpg")          
+            if path.exists("AocUserBot-Spotify.jpg"):
+                remove("AocUserBot-Spotify.jpg")          
             try:
                 r = get(str(item['album']['images'][0]['url']))
-                with open("@HerlockUserBot-Spotify.jpg", 'wb') as f:
+                with open("AocUserBot-Spotify.jpg", 'wb') as f:
                     f.write(r.content)    
 
-                with open('HerlockUserBot-Spotify.jpg', 'rb') as f:
+                with open('AocUserBot-Spotify.jpg', 'rb') as f:
                     req = post('https://telegra.ph/upload', 
                     files={'Hey': ('Hey', f, 'image/jpeg')}  # image/gif, image/jpeg, image/jpg, image/png, video/mp4
                     ).json()
                     image = "[🔄](https://telegra.ph"+req[0]['src']+")"
             except Exception:
                 pass
-        if path.exists("@HerlockUserBot-Spotify.jpg"):
-            remove("@HerlockUserBot-Spotify.jpg") 
+        if path.exists("AocUserBot-Spotify.jpg"):
+            remove("AocUserBot-Spotify.jpg") 
         art = []
         message = ""
         Stop = False
