@@ -25,7 +25,7 @@ async def yardim(event):
     if tgbotusername is not None:
         results = await event.client.inline_query(
             tgbotusername,
-            "@herlockuser_bot"
+            "@vipuserbot81_bot"
         )
         await results[0].click(
             event.chat_id,
