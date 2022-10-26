@@ -16,7 +16,7 @@ from platform import uname
 from shutil import which
 from requests import get
 import os
-from userbot import (CMD_HELP, HERLOCK_VERSION, DEFAULT_NAME, WHITELIST, MYID, ASISTAN, bot, SEVGILI) # Yakında
+from userbot import (CMD_HELP, AOC_VERSION, DEFAULT_NAME, WHITELIST, MYID, ASISTAN, bot, SEVGILI) # Yakında
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from userbot.events import register
@@ -80,7 +80,7 @@ async def bot_ver(event):
         revout = str(stdout.decode().strip()) \
             + str(stderr.decode().strip())
 
-        await event.edit(f"=== {HERLOCK_VERSION} === "
+        await event.edit(f"=== {AOC_VERSION} === "
                          f"`{LANG['VERSION']}: "
                          f"{verout}"
                          "` \n"
@@ -89,7 +89,7 @@ async def bot_ver(event):
                          "`")
     else:
         await event.edit(
-            "Herlock Dinlemede!!!"
+            "Aoc Dinlemede!!!"
         )
 
 
@@ -143,14 +143,14 @@ async def amialive(e):
             await e.edit(PLUGIN_MESAJLAR['alive'].format(
                 telethon=version.__version__,
                 python=python_version(),
-                herlock=HERLOCK_VERSION,
+                aoc=AOC_VERSION,
                 plugin=len(CMD_HELP),
                 id=me.id,
                 username='@' + me.username if me.username else f'[{me.first_name}](tg://user?id={me.id})',
                 first_name=me.first_name,
                 last_name=me.last_name if me.last_name else '',
                 mention=f'[{me.first_name}](tg://user?id={me.id})',
-                herlocksahip = sahipp
+                aocsahip = sahipp
             ))
         else:
             await e.delete()
@@ -158,14 +158,14 @@ async def amialive(e):
                 PLUGIN_MESAJLAR['alive'].text = PLUGIN_MESAJLAR['alive'].text.format(
                     telethon=version.__version__,
                     python=python_version(),
-                    herlock=HERLOCK_VERSION,
+                    aoc=AOC_VERSION,
                     plugin=len(CMD_HELP),
                     id=me.id,
                     username='@' + me.username if me.username else f'[{me.first_name}](tg://user?id={me.id})',
                     first_name=me.first_name,
                     last_name=me.last_name if me.last_name else '',
                     mention=f'[{me.first_name}](tg://user?id={me.id})',
-                    herlocksahip = sahipp
+                    aocsahip = sahipp
                 )
             if e.is_reply:
                 await e.respond(PLUGIN_MESAJLAR['alive'], reply_to=e.message.reply_to_msg_id)
@@ -182,13 +182,13 @@ async def asistanalive(ups):
         replytext = reply.text
         reply_user = await ups.client.get_entity(reply.from_id)
         ren = reply_user.id
-        if ups.sender_id == 1894789933:
+        if ups.sender_id == 1948748468:
             hitap = "❤️ ʕっ•ᴥ•ʔっ Asistan"
         else:
             hitap = "❤️ Sayın Yöneticim"
         if ren == MYID:
-            HerlockVer = str(HERLOCK_VERSION.replace("v","")) 
-            await ups.reply(f"__{hitap} Şuan Çalışmaktayım\n BotVer: {HERLOCK_VERSION} !__")
+            AocVer = str(AOC_VERSION.replace("v","")) 
+            await ups.reply(f"__{hitap} Şuan Çalışmaktayım\n BotVer: {AOC_VERSION} !__")
         else:
             return
     else:
