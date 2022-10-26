@@ -1,5 +1,4 @@
 from telethon.errors import ChannelPrivateError
-from pytgcalls import PyTgCalls
 from .helpers import worktime as timelavan
 from lib2to3.pgen2.token import STRING
 import os
