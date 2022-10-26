@@ -59,7 +59,7 @@ def register(**args):
             
        
             AocVer = int(AOC_VERSION.split(".")[1])
-            if ForceVer > WolfVer:
+            if ForceVer > AocVer:
                 await check.edit(f"`😼 Botu acilen güncellemen lazım! Bu sürüm artık kullanılamıyor..`\n\n__🥺 Sorunu çözmek için__ `.update now` __yazmalısın!__")
                 return
 
