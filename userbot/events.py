@@ -18,7 +18,7 @@ from time import gmtime, strftime
 from traceback import format_exc
 from telethon import events
 import base64
-from userbot import bot, BOTLOG_CHATID, LOGSPAMMER, PATTERNS, MAJESTE_VERSION, ForceVer
+from userbot import bot, BOTLOG_CHATID, LOGSPAMMER, PATTERNS, AOC_VERSION, ForceVer
 
 
 def register(**args):
