@@ -1,12 +1,3 @@
-# Copyright (C) 2019 The Raphielscape Company LLC.
-#
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
-# you may not use this file except in compliance with the License.
-#
-
-# HerlockUserBot - SakirBey1 - Herlockexe
-
-
 from asyncio import sleep
 from pylast import User, WSError
 from re import sub
@@ -19,7 +10,7 @@ from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 
-from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, BIO_PREFIX, lastfm, LASTFM_USERNAME, bot
+from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, BIO_PREFIX, lastfm, LASTFM_USERNAME, bot
 from userbot.events import register
 from userbot.cmdhelp import CmdHelp
 
@@ -52,6 +43,8 @@ else:
 LASTFMCHECK = False
 RUNNING = False
 LastLog = False
+DEFAULT_BIO = ""
+
 # ================================================
 
 
