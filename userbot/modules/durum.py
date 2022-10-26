@@ -34,7 +34,7 @@ async def durums(event):
     await event.edit(f"""
 **Python {LANG['VERSION']}:** `{python_version()}`
 **TeleThon {LANG['VERSION']}:** `{version.__version__}` 
-**Kedu {LANG['VERSION']}:** `{AOC_VERSION}`
+**UserBot {LANG['VERSION']}:** `{AOC_VERSION}`
 
 **{LANG['PLUGIN_COUNT']}:** `{len(CMD_HELP)}`
 
@@ -66,7 +66,7 @@ async def asistandurum(ups):
             await ups.reply(f"""
 **Python {LANG['VERSION']}:** `{python_version()}`
 **TeleThon {LANG['VERSION']}:** `{version.__version__}` 
-**Majeste {LANG['VERSION']}:** `{AOC_VERSION}`
+**UserBot {LANG['VERSION']}:** `{AOC_VERSION}`
 
 **{LANG['PLUGIN_COUNT']}:** `{len(CMD_HELP)}`
 
