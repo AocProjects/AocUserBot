@@ -100,7 +100,7 @@ async def sinstall(event):
             if re.search(r'CmdHelp\(.*\)', dosy):
                 cmdhelp = re.findall(r"CmdHelp\([\"'](.*)[\"']\)", dosy)[0]
                 await plugin.forward_to(PLUGIN_CHANNEL_ID)
-                return await event.edit(f'**Modül Başarıyla Yüklendi!**\n__Modülün Kullanımı İçin__ `.herlock {cmdhelp}` __Yazın.__')
+                return await event.edit(f'**Modül Başarıyla Yüklendi!**\n__Modülün Kullanımı İçin__ `.aoc {cmdhelp}` __Yazın.__')
             else:
                 await plugin.forward_to(PLUGIN_CHANNEL_ID)
                 userbot.cmdhelp.CmdHelp(dosya).add_warning('Komutlar bulunamadı!').add()
@@ -109,12 +109,12 @@ async def sinstall(event):
             if re.search(r'CmdHelp\(.*\)', dosy):
                 cmdhelp = re.findall(r"CmdHelp\([\"'](.*)[\"']\)", dosy)[0]
                 await plugin.forward_to(PLUGIN_CHANNEL_ID)
-                return await event.edit(f'**Herlock Plugin Mağazası**\n__Versiyon 1.0__\n\n**✅ Modül Başarıyla Yüklendi!**\n__ℹ️ Modülün Kullanımını Öğrenmek İçin__ `.herlock {cmdhelp}` __Yazınız.__')
+                return await event.edit(f'**Herlock Plugin Mağazası**\n__Versiyon 1.0__\n\n**✅ Modül Başarıyla Yüklendi!**\n__ℹ️ Modülün Kullanımını Öğrenmek İçin__ `.aoc {cmdhelp}` __Yazınız.__')
             else:
                 dosyaAdi = plugin.file.name.replace('.py', '')
                 extractCommands(dosya)
                 await plugin.forward_to(PLUGIN_CHANNEL_ID)
-                return await event.edit(f'**Herlock Plugin Mağazası**\n__Versiyon 1.0__\n\n**✅ Modül Başarıyla Yüklendi!**\n__ℹ️ Modülün Kullanımını Öğrenmek İçin__ `.herlock {dosyaAdi}` __Yazınız.__')
+                return await event.edit(f'**Herlock Plugin Mağazası**\n__Versiyon 1.0__\n\n**✅ Modül Başarıyla Yüklendi!**\n__ℹ️ Modülün Kullanımını Öğrenmek İçin__ `.aoc {dosyaAdi}` __Yazınız.__')
 
 userbot.cmdhelp.CmdHelp('store').add_command(
     'store', LANG['P1'], LANG['P2']
