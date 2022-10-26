@@ -21,9 +21,9 @@ LANG = get_value("__wolf")
 
 # ████████████████████████████████ #
 
-@register(outgoing=True, pattern="^.[Mm]ajeste(?: |$)(.*)")
+@register(outgoing=True, pattern="^.[Aa]oc(?: |$)(.*)")
 async def majeste(event):
-    """ .majeste komutun """
+    """ .aoc komutun """
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
