@@ -1,32 +1,19 @@
-from telethon.errors import ChannelPrivateError
-from .helpers import worktime as timelavan
-from lib2to3.pgen2.token import STRING
 import os
-import time
-import heroku3
 from re import compile
-from .utils.pip_install import install_pip
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
-from sqlite3 import connect
-from telethon.tl.functions.channels import GetFullChannelRequest as getchat
-from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from dotenv import load_dotenv
 from requests import get
-from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelRequest
+from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.sync import TelegramClient, custom
 from telethon.sessions import StringSession
 from telethon.events import callbackquery, InlineQuery, NewMessage
-from telethon.tl.functions.users import GetFullUserRequest
 from math import ceil
-from telethon.tl.functions.channels import EditPhotoRequest, CreateChannelRequest
 
 load_dotenv("config.env")
-
-StartTime = time.time()
 
 # Bot günlükleri kurulumu:
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
@@ -35,21 +22,19 @@ ASYNC_POOL = []
 
 if CONSOLE_LOGGER_VERBOSE:
     basicConfig(
+        format="%(asctime)s - AocUserBot - %(levelname)s - %(message)s",
         level=DEBUG,
-        format="[%(asctime)s - %(levelname)s] - AocUserBot : %(message)s",
-        datefmt='%d-%b-%y %H:%M:%S')
+    )
 else:
-    basicConfig(
-        level=INFO,
-        format="[%(asctime)s - %(levelname)s] - AocUserBot : %(message)s",
-        datefmt='%d-%b-%y %H:%M:%S')
+    basicConfig(format="%(asctime)s - AocUserBot - %(levelname)s - %(message)s",
+                level=INFO)
 LOGS = getLogger(__name__)
 
 if version_info[0] < 3 or version_info[1] < 6:
     LOGS.info("En az python 3.6 sürümüne sahip olmanız gerekir."
               "Birden fazla özellik buna bağlıdır. Bot kapatılıyor.")
     quit(1)
-branch = "master"
+
 # Yapılandırmanın önceden kullanılan değişkeni kullanarak düzenlenip düzenlenmediğini kontrol edin.
 # Temel olarak, yapılandırma dosyası için kontrol.
 CONFIG_CHECK = os.environ.get(
@@ -68,36 +53,16 @@ if not LANGUAGE in ["EN", "TR", "AZ", "UZ", "DEFAULT"]:
     LOGS.info("Bilinmeyen bir dil yazdınız. Bundan dolayı DEFAULT kullanılıyor.")
     LANGUAGE = "DEFAULT"
     
-# UserBot versiyon
-AOC_VERSION = "v0.2"
+#  Sürümü
+AOC_VERSION = "v1.0"
 
-MAX_MESSAGE_SIZE_LIMIT = 4095
 # Telegram API KEY ve HASH
 API_KEY = os.environ.get("API_KEY", None)
 API_HASH = os.environ.get("API_HASH", None)
 
-SEVGILI = os.environ.get("SEVGILI",None)
-
-#Groul Call 
-async def get_call(event):
-    mm = await event.client(getchat(event.chat_id))
-    xx = await event.client(getvc(mm.full_chat.call))
-    return xx.call
-
-#Sudoİd
-SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r".")
-try:
-    SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
-except ValueError:
-    raise Exception("Bir Kullanıcı İd si Belirtmek zorundasın.")
-
 SILINEN_PLUGIN = {}
 # UserBot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
-STRING_2 = os.environ.get("STRING_2", None)
-STRING_3 = os.environ.get("STRING_3", None)
-STRING_4 = os.environ.get("STRING_4", None)
-STRING_5 = os.environ.get("STRING_5", None)
 
 # Kanal / Grup ID yapılandırmasını günlüğe kaydetme.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", None))
@@ -114,51 +79,13 @@ HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
 HEROKU_APPNAME = os.environ.get("HEROKU_APPNAME", None)
 HEROKU_APIKEY = os.environ.get("HEROKU_APIKEY", None)
 
-
-
-EZZEC = False
-Heroku = None
-app = None
-
-if HEROKU_APPNAME is not None and HEROKU_APIKEY is not None:
-    if EZZEC == True:
-        pass
-    else:
-        EZZEC = True
-        Heroku = heroku3.from_key(HEROKU_APIKEY)
-        app = Heroku.app(HEROKU_APPNAME)
-        heroku_var = app.config()
-        heroku_var["UPSTREAM_REPO_URL"] = "https://github.com/HerlockBots/AocUserBot.git"
-else:
-    app = None
-
-
-try:
-    import randomstuff
-except ModuleNotFoundError:
-    install_pip("randomstuff.py")
-    import randomstuff
-
-#Chatbot için Client -- Ber4tbey
-RANDOM_STUFF_API_KEY = os.environ.get("RANDOM_STUFF_API_KEY", None)
-if RANDOM_STUFF_API_KEY:
-    try:
-        rs_client = randomstuff.AsyncClient(api_key=RANDOM_STUFF_API_KEY, version="4")
-    except:
-        print('Invalid RANDOM_STUFF_API_KEY')
-        rs_client = None
-else:
-    rs_client = None
-AI_LANG = os.environ.get("AI_LANG", 'en')
-
-
 # Güncelleyici için özel (fork) repo linki.
-STABILITY = sb(os.environ.get("STABILITY", "True")) # 
+UPSTREAM_REPO_URL = os.environ.get(
+    "UPSTREAM_REPO_URL",
+    "https://github.com/HerlockBots/AocUserBot.git")
 
-UPSTREAM_REPO_URL = "https://github.com/HerlockBots/AocUserBot.git" 
-EMERGENCY = "https://github.com/HerlockBots/AocUserBot.git" # Acil durrum için
-# Afk mesajların iletilmesi
-AFKILETME = sb(os.environ.get("AFKILETME", "True"))
+# Ayrıntılı konsol günlügü
+CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 # SQL Veritabanı
 DB_URI = os.environ.get("DATABASE_URL", "sqlite:///aoc.db")
@@ -171,9 +98,6 @@ REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
 
 # AUTO PP
 AUTO_PP = os.environ.get("AUTO_PP", None)
-
-SUDO_ID = set(int(x) for x in os.environ.get("SUDO_ID", "").split())
-#OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "").split())
 
 # Warn modül
 WARN_LIMIT = int(os.environ.get("WARN_LIMIT", 3))
@@ -189,9 +113,6 @@ GALERI_SURE = int(os.environ.get("GALERI_SURE", 60))
 CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
 
-#Time
-WORKTIME = time.time()
-
 PLUGINID = os.environ.get("PLUGIN_CHANNEL_ID", None)
 # Plugin İçin
 if not PLUGINID:
@@ -203,9 +124,12 @@ else:
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", None)
 
+# Lydia API
+LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
+
 # Anti Spambot
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
-ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "True"))
+ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
 # Youtube API key
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
@@ -214,14 +138,12 @@ YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
-
-
 # Temiz Karşılama
 CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
 
 # Last.fm Modülü
 BIO_PREFIX = os.environ.get("BIO_PREFIX", "@SakirBey2 <3 | ")
-#DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
+DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
 
 LASTFM_API = os.environ.get("LASTFM_API", None)
 LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
@@ -244,98 +166,32 @@ GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY",
                                          "./downloads")
 
-#AFK dan sonra eski haline dönmesi için
-DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
-
-# Bazı pluginler için doğrulama
-USERBOT_ = True
-
-# Inline yardımın çalışması için
+# Inline bot çalışması için
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
 
 # Genius modülünün çalışması için buradan değeri alın https://genius.com/developers her ikisi de aynı değerlere sahiptir
 GENIUS = os.environ.get("GENIUS", None)
-
 CMD_HELP = {}
 CMD_HELP_BOT = {}
-
 PM_AUTO_BAN_LIMIT = int(os.environ.get("PM_AUTO_BAN_LIMIT", 4))
 
 SPOTIFY_DC = os.environ.get("SPOTIFY_DC", None)
 SPOTIFY_KEY = os.environ.get("SPOTIFY_KEY", None)
 
-PAKET_ISMI = os.environ.get("PAKET_ISMI", "| 🌃 @SakirBey2 Paketi |")
+PAKET_ISMI = os.environ.get("PAKET_ISMI", "@SakirBey2 Paketi")
 
-# Userbotu kapatmak için gruplar
-
-BLACKLIST_CHAT = [1698661722]
-
-# Otomatik Katılma ve güncellemeler
+# Otomatik Katılma
 OTOMATIK_KATILMA = sb(os.environ.get("OTOMATIK_KATILMA", "True"))
-AUTO_UPDATE =  sb(os.environ.get("AUTO_UPDATE", "True"))
-
 
 # Özel Pattern'ler
 PATTERNS = os.environ.get("PATTERNS", ".;!,")
-WHITELIST = get('https://raw.githubusercontent.com/HerlockBots/datas/master/whitelist.json').json()
-
-if HEROKU_APPNAME is not None and HEROKU_APIKEY is not None:
-    Heroku = heroku3.from_key(HEROKU_APIKEY)
-    app = Heroku.app(HEROKU_APPNAME)
-    heroku_var = app.config()
-
-# Bot versiyon kontrolü
-forceVer = []
-if os.path.exists("force-surum.check"):
-    os.remove("force-surum.check")
-else:
-    LOGS.info("Force Sürüm Kontrol dosyası yok, getiriliyor...")
-
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-surum.check' 
-with open('force-surum.check', 'wb') as load:
-    load.write(get(URL).content)
-
-DB = connect("force-surum.check")
-CURSOR = DB.cursor()
-CURSOR.execute("""SELECT * FROM SURUM1""")
-ALL_ROWS = CURSOR.fetchall()
-
-for i in ALL_ROWS:
-    forceVer.append(i[0])
-connect("force-surum.check").close() 
-
-DEVS = [1948748468] #Developer için ayrıcalıklar
-
-
-upVer = []
-if os.path.exists("force-update.check"):
-    os.remove("force-update.check")
-else:
-    LOGS.info("Force Update Kontrol dosyası yok, getiriliyor...")
-
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-update.check' 
-with open('force-update.check', 'wb') as load:
-    load.write(get(URL).content)
-#Time
-WORKTIME = time.time()
-
-
-DB = connect("force-update.check")
-CURSOR = DB.cursor()
-CURSOR.execute("""SELECT * FROM SURUM1""")
-ALL_ROWS = CURSOR.fetchall()
-
-for i in ALL_ROWS:
-    upVer.append(i[0])
-connect("force-update.check").close() 
+WHITELIST = get('https://gitlab.com/Quiec/asen/-/raw/master/whitelist.json').json()
 
 # CloudMail.ru ve MEGA.nz ayarlama
 if not os.path.exists('bin'):
     os.mkdir('bin')
 
-else:
-    app = None
 binaries = {
     "https://raw.githubusercontent.com/yshalsager/megadown/master/megadown":
     "bin/megadown",
@@ -343,152 +199,50 @@ binaries = {
     "bin/cmrudl"
 }
 
-
-    
 for binary, path in binaries.items():
     downloader = SmartDL(binary, path, progress_bar=False)
     downloader.start()
     os.chmod(path, 0o755)
 
-from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
-loop = None
-import sys
-
+# 'bot' değişkeni
 if STRING_SESSION:
-    session = StringSession(str(STRING_SESSION))
+    # pylint: devre dışı=geçersiz ad
+    bot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 else:
-    session = "AocUserBot"
-try:
-    bot = TelegramClient(
-        session=session,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py = PyTgCalls(bot)
-except Exception as e:
-    print(f"STRING_SESSION - {e}")
-    sys.exit()
+    # pylint: devre dışı=geçersiz ad
+    bot = TelegramClient("userbot", API_KEY, API_HASH)
 
-
-if STRING_2:
-    session2 = StringSession(str(STRING_2))
-    STR2 = TelegramClient(
-        session=session2,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py2 = PyTgCalls(STR2)
-else:
-    call_py2 = None
-    STR2 = None
-
-
-if STRING_3:
-    session3 = StringSession(str(STRING_3))
-    STR3 = TelegramClient(
-        session=session3,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py3 = PyTgCalls(STR3)
-else:
-    call_py3 = None
-    STR3 = None
-
-
-if STRING_4:
-    session4 = StringSession(str(STRING_4))
-    STR4 = TelegramClient(
-        session=session4,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py4 = PyTgCalls(STR4)
-else:
-    call_py4 = None
-    STR4 = None
-from asyncio import get_event_loop
-LOOP = get_event_loop()
-if STRING_5:
-    session5 = StringSession(str(STRING_5))
-    STR5 = TelegramClient(
-        session=session5,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py5 = PyTgCalls(STR5)
-else:
-    call_py5 = None
-    STR5 = None
-
-
-async def update_restart_msg(chat_id, msg_id):
-    message = (
-        f"**AocUserbot v{AOC_VERSION} is back up and running!**\n\n")
-     
-    await bot.edit_message(chat_id, msg_id, message)
-    return True
-
-
-ASISTAN = 5319669482 # Bot yardımcısı
 
 if os.path.exists("learning-data-root.check"):
     os.remove("learning-data-root.check")
 else:
     LOGS.info("Braincheck dosyası yok, getiriliyor...")
 
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/learning-data-root.check'
+URL = 'https://raw.githubusercontent.com/quiec/databasescape/master/learning-data-root.check'
 with open('learning-data-root.check', 'wb') as load:
     load.write(get(URL).content)
-    
-# async def get_call(event):
-    # mm = await event.client(getchat(event.chat_id))
-   # xx = await event.client(getvc(mm.full_chat.call))
-   # return xx.call
-"""async def check_botlog_chatid():
+
+async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
         LOGS.info(
             "Özel hata günlüğünün çalışması için yapılandırmadan BOTLOG_CHATID değişkenini ayarlamanız gerekir.")
         quit(1)
+
     elif not BOTLOG_CHATID and BOTLOG:
         LOGS.info(
             "Günlüğe kaydetme özelliğinin çalışması için yapılandırmadan BOTLOG_CHATID değişkenini ayarlamanız gerekir.")
         quit(1)
+
     elif not BOTLOG or not LOGSPAMMER:
         return
+
     entity = await bot.get_entity(BOTLOG_CHATID)
     if entity.default_banned_rights.send_messages:
         LOGS.info(
             "Hesabınızın BOTLOG_CHATID grubuna mesaj gönderme yetkisi yoktur. "
             "Grup ID'sini doğru yazıp yazmadığınızı kontrol edin.")
-        quit(1)"""
+        quit(1)
         
-        
-from random import randint
-import heroku3
-import asyncio
-from telethon.tl.functions.contacts import UnblockRequest
-
-
-
-
-        
-          
 if not BOT_TOKEN == None:
     tgbot = TelegramClient(
         "TG_BOT_TOKEN",
@@ -518,31 +272,23 @@ def butonlastir(sayfa, moduller):
     return [max_pages, butonlar]
 
 with bot:
-
-
-    try:
-        bot(JoinChannelRequest("@SakirBey2"))
-    except:
-        pass
- 
-
+    if OTOMATIK_KATILMA:
+        try:
+            bot(JoinChannelRequest("@SakirBey2"))
+        except:
+            pass
 
     moduller = CMD_HELP
-    
     me = bot.get_me()
     uid = me.id
-    usnm = me.username
-    name = me.first_name
-    lname = me.last_name
-    OWNER_ID = me.id
-    DEFAULT_NAME = name
+
     try:
         @tgbot.on(NewMessage(pattern='/start'))
         async def start_bot_handler(event):
             if not event.message.from_id == uid:
-                await event.reply(f'`Merhaba ben` AocUserBot`! Ben sahibime (`@{me.username}`) yardımcı olmak için varım, yaani sana yardımcı olamam :/')
+                await event.reply(f'`Merhaba ben` AocUserBot`! Ben sahibime (`@{me.username}`) yardımcı olmak için varım, yaani sana yardımcı olamam :/ ')
             else:
-                await event.reply(f'`Tengri save Turks! Owen working... `')
+                await event.reply(f'`Tengri save Turks! Aoc working... 🐺`')
 
         @tgbot.on(InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
@@ -554,7 +300,7 @@ with bot:
                 veriler = (butonlastir(0, sorted(CMD_HELP)))
                 result = await builder.article(
                     f"Lütfen Sadece .yardım Komutu İle Kullanın",
-                    text=f"**En Gelişmiş UserBot!** __Çalışıyor...__\n\n**Yüklenen Modül Sayısı:** `{len(CMD_HELP)}`\n**Sayfa:** 1/{veriler[0]}",
+                    text=f"**Özel UserBot** __Çalışıyor...__\n\n**Yüklenen Modül Sayısı:** `{len(CMD_HELP)}`\n**Sayfa:** 1/{veriler[0]}",
                     buttons=veriler[1],
                     link_preview=False
                 )
@@ -577,7 +323,7 @@ Hesabınızı bot'a çevirebilirsiniz ve bunları kullanabilirsiniz. Unutmayın,
                         [custom.Button.url("Kanala Katıl", "https://t.me/SakirBey2"), custom.Button.url(
                             "Gruba Katıl", "https://t.me/FBIFEDERASYONUYENIDEN")],
                         [custom.Button.url(
-                            "GitHub", "https://nolur.com/")]
+                            "GitHub", "https://github.com/HerlockBots/AocUserBot")]
                     ],
                     link_preview=False
                 )
@@ -590,7 +336,7 @@ Hesabınızı bot'a çevirebilirsiniz ve bunları kullanabilirsiniz. Unutmayın,
             sayfa = int(event.data_match.group(1).decode("UTF-8"))
             veriler = butonlastir(sayfa, CMD_HELP)
             await event.edit(
-                f"** En Gelişmiş UserBot!** __Çalışıyor...__\n\n**Yüklenen Modül Sayısı:** `{len(CMD_HELP)}`\n**Sayfa:** {sayfa + 1}/{veriler[0]}",
+                f"**Endişelenmeyin en gelişmiş UserBot**  __Çalışıyor...__\n\n**Yüklenen Modül Sayısı:** `{len(CMD_HELP)}`\n**Sayfa:** {sayfa + 1}/{veriler[0]}",
                 buttons=veriler[1],
                 link_preview=False
             )
@@ -655,34 +401,30 @@ Hesabınızı bot'a çevirebilirsiniz ve bunları kullanabilirsiniz. Unutmayın,
                 link_preview=False
             )
     except Exception as e:
-        pass
+        print(e)
+        LOGS.info(
+            "Botunuzda inline desteği devre dışı bırakıldı. "
+            "Etkinleştirmek için bir bot token tanımlayın ve botunuzda inline modunu etkinleştirin. "
+            "Eğer bunun dışında bir sorun olduğunu düşünüyorsanız bize ulaşın."
+        )
 
-"""try:
+    try:
         bot.loop.run_until_complete(check_botlog_chatid())
-except:
+    except:
         LOGS.info(
             "BOTLOG_CHATID ortam değişkeni geçerli bir varlık değildir. "
             "Ortam değişkenlerinizi / config.env dosyanızı kontrol edin."
         )
-        quit(1)"""
-
-#Auto bot
-
-
+        quit(1)
 
 
 # Küresel Değişkenler
 SON_GORULME = 0
 COUNT_MSG = 0
 USERS = {}
-MYID = uid
-ForceVer = int(forceVer[0])
-upVer = int(upVer[0])
 BRAIN_CHECKER = []
 COUNT_PM = {}
 LASTMSG = {}
-CMD_LIST = {}
-FUP = True
 ENABLE_KILLME = True
 ISAFK = False
 AFKREASON = None
