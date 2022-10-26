@@ -17,7 +17,6 @@ from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 from telethon.tl.functions.channels import GetMessagesRequest
 from . import BRAIN_CHECKER, LOGS, bot, PLUGIN_CHANNEL_ID, CMD_HELP, LANGUAGE, AOC_VERSION, PATTERNS, BOT_TOKEN
 from .modules import ALL_MODULES
-from .asisstant.modules import ALL_MODULE
 import userbot.modules.sql_helper.mesaj_sql as MSJ_SQL
 import userbot.modules.sql_helper.galeri_sql as GALERI_SQL
 from pySmartDL import SmartDL
