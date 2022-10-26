@@ -1,21 +1,10 @@
-# Thanks to those who contributed
-#
-# Licensed under the GPL-3.0 License;
-# you may not use this file except in compliance with the License.
-##
-# - tg: @Herlockuserbot - @HerlockSupport
-# HerlockUserBot - Sakir Bey - Herlockexe
-
-
-""" AFK ile ilgili komutları içeren UserBot modülü """
-
 from random import randint
 from asyncio import sleep
 
 from telethon.events import StopPropagation
 
 from userbot import (AFKREASON, COUNT_MSG, CMD_HELP, ISAFK, BOTLOG,
-                     BOTLOG_CHATID, USERS, PM_AUTO_BAN, SON_GORULME, ASISTAN, MYID, AFKILETME, DEFAULT_BIO)
+                     BOTLOG_CHATID, USERS, PM_AUTO_BAN, SON_GORULME, ASISTAN, MYID, AFKILETME)
 from userbot.events import register
 from userbot.main import PLUGIN_MESAJLAR
 from time import time
@@ -337,10 +326,10 @@ async def set_afk(afk_e):
         AFKREASON = string
         await afk_e.edit(f"{LANG['IM_AFK']}\
         \n{LANG['REASON']}: `{string}`")
-        await afk_e.client(UpdateProfileRequest(about='Sahibim Şuan #AFK @Wolfuserbott ✨')) #BUNU KULLANIPTA 
+        # await afk_e.client(UpdateProfileRequest(about='Sahibim Şuan #AFK AocUserBot, ✨')) #BUNU KULLANIPTA CR VERMEYENİN ANASINI SİKİM TEŞEKKÜRLER / ByMisakiMey
     else:
         await afk_e.edit(LANG['IM_AFK'])
-        await afk_e.client(UpdateProfileRequest(about='Sahibim Şuan #AFK @Wolfuserbott ✨'))
+        # await afk_e.client(UpdateProfileRequest(about='Sahibim Şuan #AFK AocUserBot ✨'))
     SON_GORULME = time()
     if BOTLOG:
         await afk_e.client.send_message(BOTLOG_CHATID, "#AFK\nAFK oldunuz.")
@@ -386,7 +375,7 @@ async def type_afk_is_not_true(notafk):
     if ISAFK:
         ISAFK = False
         await notafk.respond(LANG['IM_NOT_AFK'])
-        await notafk.client(UpdateProfileRequest(about=f"{DEFAULT_BIO}"))
+        # await notafk.client(UpdateProfileRequest(about=f"{DEFAULT_BIO}"))
         await sleep(2)
         if BOTLOG:
             await notafk.client.send_message(
