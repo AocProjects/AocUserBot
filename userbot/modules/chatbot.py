@@ -55,7 +55,7 @@ async def translate_to_msg(text_msg, to):
 @register(outgoing=True, disable_edited=False)
 async def txt(msg):
     global BOT
-    if msg.chat_id == -None:
+    if msg.chat_id == -1001576867849:
         return False
     
 
