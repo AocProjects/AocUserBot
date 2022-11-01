@@ -51,7 +51,7 @@ async def speedtst(spd):
 
 def speed_convert(size):
     """
-    Merhaba Herlock, baytları okuyamıyor musun?
+    Merhaba Aoc, baytları okuyamıyor musun?
     """
     power = 2**10
     zero = 0
@@ -78,7 +78,7 @@ async def pingme(pong):
     await pong.edit("`Pong!`")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit("`Pong!\n%sms`" % (duration))
+    await pong.edit("__Pong!__\n**%sms **" % (duration))
 
 @register(incoming=True, from_users=ASISTAN, pattern="^.ping$")
 async def asistanping(ups):
@@ -92,7 +92,7 @@ async def asistanping(ups):
             usp = await ups.reply("`Pong!`")
             end = datetime.now()
             duration = (end - start).microseconds / 1000
-            await usp.edit("`Pong!\n%sms`" % (duration))
+            await usp.edit("__Pong!__\n**%sms **" % (duration))
         else:
             return
     else:
