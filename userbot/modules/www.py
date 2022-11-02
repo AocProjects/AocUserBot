@@ -29,7 +29,6 @@ async def speedtst(spd):
     """ .speed komutu sunucu hızını tespit etmek için SpeedTest kullanır. """
     await spd.edit(LANG['SPEED'])
     test = Speedtest()
-
     test.get_best_server()
     test.download()
     test.upload()
