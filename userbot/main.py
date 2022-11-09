@@ -176,7 +176,7 @@ def extractCommands(file):
 try:
     bot.start()
     idim = bot.get_me().id
-    aocbl = requests.get('https://raw.githubusercontent.com/AocUserBot/datas/master/blacklist.json').json()
+    aocbl = requests.get('https://raw.githubusercontent.com/AocProjects/datas/master/blacklist.json').json()
     if idim in aocbl:
         bot.send_message("me", f"`❌ UserBot yöneticileri sizi bottan yasakladı! Bot kapatılıyor...`")
         LOGS.error("UserBot yöneticileri sizi bottan yasakladı! Bot kapatılıyor...")
