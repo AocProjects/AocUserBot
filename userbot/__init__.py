@@ -120,7 +120,7 @@ if HEROKU_APPNAME is not None and HEROKU_APIKEY is not None:
         Heroku = heroku3.from_key(HEROKU_APIKEY)
         app = Heroku.app(HEROKU_APPNAME)
         heroku_var = app.config()
-        heroku_var["UPSTREAM_REPO_URL"] = "https://github.com/HerlockBots/AocUserBot.git"
+        heroku_var["UPSTREAM_REPO_URL"] = "https://github.com/AocUserBot/AocUserBot.git"
 else:
     app = None
 
@@ -147,8 +147,8 @@ AI_LANG = os.environ.get("AI_LANG", 'en')
 # Güncelleyici için özel (fork) repo linki.
 STABILITY = sb(os.environ.get("STABILITY", "True")) # 
 
-UPSTREAM_REPO_URL = "https://github.com/HerlockBots/AocUserBot.git" 
-EMERGENCY = "https://github.com/HerlockBots/AocUserBot.git" # Acil durrum için
+UPSTREAM_REPO_URL = "https://github.com/AocProjects/AocUserBot.git" 
+EMERGENCY = "https://github.com/AocProjects/AocUserBot.git" # Acil durrum için
 # Afk mesajların iletilmesi
 AFKILETME = sb(os.environ.get("AFKILETME", "True"))
 
@@ -262,7 +262,7 @@ PAKET_ISMI = os.environ.get("PAKET_ISMI", "| 🌃 @SakirBey2 Paketi |")
 # Userbotu kapatmak için gruplar
 BLACKLIST_CHAT = os.environ.get("BLACKLIST_CHAT", None)
 
-if not BLACKLIST_CHAT: #Eğer ayarlanmamışsa Herlock Support grubu eklenir.
+if not BLACKLIST_CHAT: #Eğer ayarlanmamışsa AocUserBot Support grubu eklenir.
     BLACKLIST_CHAT = [-1001720670570,-676459463]
 
 # Otomatik Katılma ve güncellemeler
@@ -272,7 +272,7 @@ AUTO_UPDATE =  sb(os.environ.get("AUTO_UPDATE", "True"))
 
 # Özel Pattern'ler
 PATTERNS = os.environ.get("PATTERNS", ".;!,")
-WHITELIST = get('https://raw.githubusercontent.com/HerlockBots/datas/master/whitelist.json').json()
+WHITELIST = get('https://raw.githubusercontent.com/AocProjects/datas/master/whitelist.json').json()
 
 # Bot versiyon kontrolü
 forceVer = []
@@ -281,7 +281,7 @@ if os.path.exists("force-surum.check"):
 else:
     LOGS.info("Force Sürüm Kontrol dosyası yok, getiriliyor...")
 
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-surum.check' 
+URL = 'https://rawcdn.githack.com/AocProjects/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-surum.check' 
 with open('force-surum.check', 'wb') as load:
     load.write(get(URL).content)
 
@@ -301,7 +301,7 @@ if os.path.exists("force-update.check"):
 else:
     LOGS.info("Force Update Kontrol dosyası yok, getiriliyor...")
 
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-update.check' 
+URL = 'https://rawcdn.githack.com/AocProjects/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/force-update.check' 
 with open('force-update.check', 'wb') as load:
     load.write(get(URL).content)
 
@@ -359,7 +359,7 @@ if os.path.exists("learning-data-root.check"):
 else:
     LOGS.info("Braincheck dosyası yok, getiriliyor...")
 
-URL = 'https://rawcdn.githack.com/HerlockBots/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/learning-data-root.check'
+URL = 'https://rawcdn.githack.com/AocProjects/datas/25823d68e2ceea60e93e807a047d8f4b0d1d1b90/learning-data-root.check'
 with open('learning-data-root.check', 'wb') as load:
     load.write(get(URL).content)
     
@@ -494,7 +494,7 @@ Hesabınızı bot'a çevirebilirsiniz ve bunları kullanabilirsiniz. Unutmayın,
                         [custom.Button.url("Kanala Katıl", "https://t.me/SakirBey2"), custom.Button.url(
                             "Gruba Katıl", "https://t.me/FBIFEDERASYONUYENIDEN")],
                         [custom.Button.url(
-                            "GitHub", "https://github.com/HerlockBots/AocUserBot")]
+                            "GitHub", "https://github.com/AocProjects/AocUserBot")]
                     ],
                     link_preview=False
                 )
